@@ -1,8 +1,14 @@
 package how.to.stanford.nlp;
 
-/*---------------------------*/
+/*-----------IMPORTANT----------------*/
 //To have the supporting libraries of Stanford NLP, download the CoreNLP from https://stanfordnlp.github.io/CoreNLP/download.html
-//Add all the .jar files to the libraries included the source, models and protobuf
+//Add all the .jar files to the libraries
+//For this specific project you will need the following libraries:
+//  stanford-corenlp-3.8.0-javadoc.jar
+//  stanford-corenlp-3.8.0-models.jar
+//  stanford-corenlp-3.8.0-sources.jar
+//  stanford-corenlp-3.8.0.jar
+//  protobuf.jar
 
 import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.simple.*;
@@ -14,34 +20,35 @@ public class HowToStanfordNlp {
         /*
         Stanford NLP supports the Following Annotators:
         Tokenization   
-            usage: sent.words()   |   sent.word(int)
+            usage:  sentence.words()   |   sentence.word(int)
         Sentence Splitting
             usage:  doc.sentences()  | doc.sentence(int)
         Lemmatization
-            usage:   
+            usage:   sentence.lemmas() | sentence.lemma(int)
         Named Entity Recognition
-            usage:
+            usage:   sentence.nerTags() | sentence.nerTag(int)
         Constituency Parsing
-            usage:
+            usage:   sentence.parse()
         Dependency Parsing
-            usage:
+            usage:   sentence.governor(int | sentence.incomingDependencyLabel(int)
         Coreference Resolution
-            usage:
+            usage:  doc.coref()
         natural logic polarity
-            usage:
+            usage:  sentence.natlogPolarities()  | sentence.natlogPolarity(int)
         open information extraction
-            usage:
+            usage:  sentence.openie() | sentence.openieTriples()
         */
         Document doc = new Document("This is a sample text! We are going to show the usage of each stanford NLP annotator usage. I hope you find this helpful. ");
         System.out.println ("Demo of splitting text into sentences. ");
         System.out.println (doc.sentences());
-        
+        System.out.println ("Demo of coreference resolution. ");
+        System.out.println (doc.coref());
         
         for (int i=0; i<doc.sentences().size(); i++){
             System.out.println ("------------------");
             System.out.println ("Sentence " + (i+1) + " :");
             
-            System.out.println ("Demo of sentence into words. ");
+            System.out.println ("Demo of splitting sentence into words. ");
             System.out.println (doc.sentence(i).words());
             // part of speech tagging
             System.out.println ("Demo of POS tagging. ");
@@ -49,19 +56,23 @@ public class HowToStanfordNlp {
             // lemmatization
             System.out.println ("Demo of lemma tagging. ");
             System.out.println (doc.sentence(i).lemmas());
+            // Named Entity Recognition
+            System.out.println ("Demo of named entity recognition ");
+            System.out.println (doc.sentence(i).nerTags());
+            // Constituency Recognition
+            System.out.println ("Demo of constituency parsing ");
+            System.out.println (doc.sentence(i).parse());
+            // Dependancy Parsing
+            System.out.println ("Demo of dependancy parsing ");
+            System.out.println (doc.sentence(i).governor(3));
+             // Natural Logic Polarity
+            System.out.println ("Demo of natural logic polarity ");
+            System.out.println (doc.sentence(i).natlogPolarities());
+            // Open Information Extraction
+            System.out.println ("Demo of open information extraction");
+            System.out.println (doc.sentence(i).openie());
             System.out.println ("------------------");
             System.out.println("");
         }
-//        System.out.println("------The following is annotated on single sentence------ ");
-//        for (Sentence sent : doc.sentences()) {  // iterate over all sentences in doc
-//            System.out.println("The tokenized words of '" + sent + "' are " + sent.words());
-//            // We're only asking for words -- no need to load any models yet
-//            System.out.println("The second word of the sentence '" + sent + "' is " + sent.word(1));
-//            // When we ask for the lemma, it will load and run the part of speech tagger
-//            System.out.println("The third lemma of the sentence '" + sent + "' is " + sent.lemma(2));
-//            // When we ask for the parse, it will load and run the parser
-//            System.out.println("The parse of the sentence '" + sent + "' is " + sent.parse());
-//            System.out.println("--------------------------------------------------------- ");
-//        }
     }
 }
